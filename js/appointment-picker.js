@@ -98,7 +98,7 @@
 		el.addEventListener('keyup', _this.keyEventFn);
 		el.addEventListener('change', _this.changeEventFn);
 
-		if (!_this.options.static) { // Default positioning 
+		if (!_this.options.static) { // Default positioning
 			el.addEventListener('focus', _this.openEventFn);
 		} else {
 			// Render the picker in position static, don't register onOpen event
@@ -125,7 +125,7 @@
 			}
 			if (this.time.hasOwnProperty('h')) {
 				var selectedEl = this.picker.querySelector('[value="' + this.displayTime + '"]');
-				
+
 				if (selectedEl) {
 					selectedEl.classList.add('is-selected');
 				}
@@ -196,6 +196,9 @@
 		document.body.removeEventListener('focus', this.bodyFocusEventFn, true);
 		// Add an event listener to open on click regardless of mouse focus
 		this.el.addEventListener('click', this.clickEventFn);
+        var event = document.createEvent('Event');
+        event.initEvent('close.appo.picker', true, true);
+        this.el.dispatchEvent(event);
 	};
 
 	/**
@@ -207,7 +210,7 @@
 		if (!e.target.value) return;
 
 		this.setTime(e.target.value);
-		
+
 		if (_this.options.static) {
 			this.render();
 		} else {
@@ -366,11 +369,11 @@
 
 	/**
 	 * Create time considering am/pm conventions
-	 * @param {Number} hour 
+	 * @param {Number} hour
 	 * @param {Number} minute
 	 * @param {String} pattern - used time format
 	 * @param {Boolean} isAmPmMode - false if 24h mode
-	 * @return {String} time string, i.e. '12:30 pm' 
+	 * @return {String} time string, i.e. '12:30 pm'
 	 */
 	function _printTime(hour, minute, pattern, isAmPmMode) {
 		var displayHour = hour;
@@ -424,7 +427,7 @@
 		var isAmPmMode = opt.mode === '12h';
 		var timePattern = isAmPmMode ? tpl.time12 : tpl.time24;
 
-		for (var hour = start; hour < end; hour++) { // Iterate hours start to end	
+		for (var hour = start; hour < end; hour++) { // Iterate hours start to end
 			for (var j = 0; j < intervals.length; j++) { // Iterate minutes by possible intervals
 				var minute = intervals[j];
 				var isDisabled = !_isValid(hour, minute, opt, intervals, disabledArr);
