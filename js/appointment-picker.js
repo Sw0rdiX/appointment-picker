@@ -322,6 +322,8 @@
 		var inDisabledArr = false;
 		if (hour < opt.minTime || hour > opt.maxTime || hour > 24) { // Out of min/max
 			return false;
+		} else if (hour === opt.maxTime && minute > 0) {
+			return false;
 		} else if (intervals.indexOf(minute) < 0) { // Min doesn't match any interval
 			return false;
 		}
